@@ -56,9 +56,10 @@
     "why": "Keeps the default zero-setup while letting you turn on meaning-based search locally with no code change.",
     "would_change_mind_if": "the AI briefing already finds the right context in practice, then semantic is not worth the install"
   },
-  "status": "open",
-  "chosen": null,
-  "chosen_by": null,
+  "status": "chosen",
+  "chosen": "Optional local embeddings via Ollama",
+  "chosen_by": "user",
   "created": "2026-10-01T17:56:01.142Z",
-  "agent": "claude-code"
+  "agent": "claude-code",
+  "decided": "2026-10-01T22:58:26.624Z"
 }

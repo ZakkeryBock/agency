@@ -183,7 +183,39 @@ export async function runMcp() {
     const d = { id: S.nextDecisionId(root), ...input, status: 'open', chosen: null, chosen_by: null, created: new Date().toISOString(), agent };
     S.saveDecision(root, d);
     S.appendEvent(root, { actor: 'ai', agent, kind: 'decision-open', decision: d.id, components: input.affects, reason: input.question });
-    return ok(`${d.id} opened. Tell the user: "Decision ${d.id} is waiting in Agency → Decisions" with a one-line summary, then wait for their pick.`);
+    // Two-way link: show the pick in the client terminal (MCP elicitation) AND watch for a GUI answer; first one wins.
+    if (server.server.getClientCapabilities()?.elicitation) {
+      const ac = new AbortController();
+      let viaGui = null;
+      const poll = setInterval(() => {
+        const cur = S.getDecision(root, d.id);
+        if (cur?.status === 'chosen') { viaGui = cur; ac.abort(); }
+      }, 500);
+      const rec = input.recommendation.option;
+      try {
+        const r = await server.server.elicitInput({
+          message: `${d.id}: ${input.question}\n\n${input.context}\n\nRecommended: ${rec}. ${input.recommendation.why}\n(You can also answer in the Agency GUI.)`,
+          requestedSchema: { type: 'object', required: ['choice'], properties: { choice: {
+            type: 'string', title: 'Pick one',
+            oneOf: input.options.map((o) => ({ const: o.name, title: `${o.name}${o.name === rec ? ' (Recommended)' : ''}: ${o.what_it_is} [effort ${o.effort}, ${o.reversibility} to reverse]` })),
+          } } },
+        }, { signal: ac.signal, timeout: 10 * 60 * 1000 });
+        if (r.action === 'accept' && input.options.some((o) => o.name === r.content?.choice)) {
+          const cur = S.getDecision(root, d.id);
+          if (cur.status !== 'chosen') {
+            Object.assign(cur, { status: 'chosen', chosen: r.content.choice, chosen_by: 'user', decided: new Date().toISOString() });
+            S.saveDecision(root, cur);
+            S.appendEvent(root, { actor: 'user', kind: 'decision-chosen', decision: d.id, components: d.affects, reason: cur.chosen, via: 'terminal' });
+          }
+          return ok(`${d.id} chosen by user in terminal: ${r.content.choice}. Build with it.`);
+        }
+      } catch { /* aborted by GUI answer, timeout, or client without form support: fall through */ }
+      finally { clearInterval(poll); }
+      const cur = viaGui || S.getDecision(root, d.id);
+      if (cur.status === 'chosen') return ok(`${d.id} chosen by user in the GUI: ${cur.chosen}. Build with it.`);
+      return ok(`${d.id} left open (user dismissed the prompt). It is still in Agency → Decisions; check agency_get_decision later and don't build the forked part yet.`);
+    }
+    return ok(`${d.id} opened (also visible in Agency → Decisions). NOW ask the user with AskUserQuestion: one option per option name (recommended first, label + " (Recommended)"; description = what it is, main pro/con, effort, reversibility). Then call agency_get_decision(id, choose=<exact option name>). No AskUserQuestion available: tell the user in one line and wait.`);
   });
 
   server.registerTool('agency_get_decision', {

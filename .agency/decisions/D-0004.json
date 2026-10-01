@@ -1,0 +1,71 @@
+{
+  "id": "D-0004",
+  "question": "How should open decisions be shown and answered inside the Claude Code terminal/plugin?",
+  "context": "Today agency_propose_decision only saves a decision; the user must open the GUI Decisions tab or reply in chat, then the AI calls agency_get_decision with choose. Goal: native Claude Code question UI like AskUserQuestion, so picking happens in the terminal.",
+  "affects": [
+    "mcp",
+    "skill"
+  ],
+  "options": [
+    {
+      "name": "AI asks via AskUserQuestion",
+      "what_it_is": "After propose_decision, the AI calls Claude Code's built-in AskUserQuestion with the options, then records the pick via agency_get_decision choose. Driven by skill instructions.",
+      "how_it_fits_here": "Edit skills/agency/SKILL.md and propose_decision's return text in src/mcp.js to say: ask via AskUserQuestion (recommended first, pros/cons in descriptions), pass choose. No new server logic.",
+      "pros": [
+        "Native terminal UI with previews",
+        "Tiny change, no protocol risk",
+        "GUI still works as alternate"
+      ],
+      "cons": [
+        "Relies on the AI following instructions",
+        "Claude Code only; other clients fall back to chat"
+      ],
+      "effort": "S",
+      "reversibility": "easy",
+      "reversibility_why": "Text-only change.",
+      "lock_in": "none",
+      "cost": "free",
+      "changes_components": [
+        "mcp",
+        "skill"
+      ]
+    },
+    {
+      "name": "MCP elicitation",
+      "what_it_is": "The server itself asks the client to show a form (MCP elicitation) from inside propose_decision and records the answer automatically.",
+      "how_it_fits_here": "In src/mcp.js call server.server.elicitInput with an enum of option names plus summary text; on accept save choice via S.saveDecision. GUI answers must race/cancel it.",
+      "pros": [
+        "Deterministic, not AI-dependent",
+        "Works in any client supporting elicitation"
+      ],
+      "cons": [
+        "Form shows less detail than AskUserQuestion",
+        "Tool call blocks while waiting; races with GUI answer",
+        "Client support varies"
+      ],
+      "effort": "M",
+      "reversibility": "moderate",
+      "reversibility_why": "Changes tool blocking semantics.",
+      "lock_in": "none",
+      "cost": "free",
+      "changes_components": [
+        "mcp"
+      ],
+      "links": {
+        "docs": "https://modelcontextprotocol.io/specification/2025-06-18/client/elicitation",
+        "maturity": "Spec feature, client support partial"
+      }
+    }
+  ],
+  "recommendation": {
+    "option": "AI asks via AskUserQuestion",
+    "why": "Gives the richest native terminal prompt with one small edit to skill and mcp text, with no blocking or GUI race in the server.",
+    "would_change_mind_if": "AI often skips asking, then add elicitation as enforced fallback."
+  },
+  "status": "chosen",
+  "chosen": "AI asks via AskUserQuestion",
+  "chosen_by": "user",
+  "created": "2026-10-01T22:43:25.086Z",
+  "agent": "claude-code",
+  "decided": "2026-10-01T22:47:32.466Z"
+}

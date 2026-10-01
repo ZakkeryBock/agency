@@ -7,7 +7,10 @@ import * as S from './store.js';
 
 const PKG = path.resolve(fileURLToPath(import.meta.url), '../..');
 export const BIN = path.join(PKG, 'bin', 'agency.js').split(path.sep).join('/');
-const cmd = (sub) => `node "${BIN}" ${sub}`;
+// Emitted configs use npx so nothing depends on where this checkout lives.
+const PKG_NAME = 'agency-dev';
+const cmd = (sub) => `npx -y ${PKG_NAME} ${sub}`;
+const isAgencyHook = (h) => /agency(-dev|\.js")\s+(hook|statusline)/.test(h.command || '');
 
 const TEMPLATES = {
   'component.md': '# {{title}}\n\n## What it does\n\n## Why it exists\n\n## Gotchas\n\n## Notes\n',
@@ -50,16 +53,19 @@ export function init(root = process.cwd()) {
   // MCP server for Claude Code (project scope)
   mergeJSON(path.join(root, '.mcp.json'), (d) => {
     d.mcpServers = d.mcpServers || {};
-    d.mcpServers.agency = { command: 'node', args: [BIN, 'mcp'], env: { AGENCY_AGENT: 'claude-code' } };
+    const args = ['-y', PKG_NAME, 'mcp'];
+    const env = { AGENCY_AGENT: 'claude-code' };
+    // Windows can't spawn npx directly (.cmd shim)
+    d.mcpServers.agency = process.platform === 'win32' ? { command: 'cmd', args: ['/c', 'npx', ...args], env } : { command: 'npx', args, env };
   });
 
   // Hooks (project settings, merged, idempotent)
   mergeJSON(path.join(root, '.claude', 'settings.json'), (d) => {
     d.hooks = d.hooks || {};
     const add = (event, sub, matcher) => {
-      const list = (d.hooks[event] = d.hooks[event] || []);
+      // replace older agency hooks (e.g. absolute-path ones) so re-running init upgrades them
+      const list = (d.hooks[event] = (d.hooks[event] || []).filter((g) => !g.hooks?.some(isAgencyHook)));
       const c = cmd(`hook ${sub}`);
-      if (list.some((g) => g.hooks?.some((h) => h.command?.includes('agency.js" hook')))) return;
       list.push({ ...(matcher && { matcher }), hooks: [{ type: 'command', command: c, timeout: 10 }] });
     };
     add('SessionStart', 'session-start');
@@ -88,7 +94,7 @@ export function init(root = process.cwd()) {
     const hook = path.join(gitHooks, 'post-commit');
     const line = `${cmd('hook post-commit')} || true`;
     const cur = fs.existsSync(hook) ? fs.readFileSync(hook, 'utf8') : '#!/bin/sh\n';
-    if (!cur.includes('agency.js" hook post-commit')) fs.writeFileSync(hook, cur.replace(/\s*$/, '\n') + line + '\n', { mode: 0o755 });
+    if (!/agency(-dev|\.js")\s+hook post-commit/.test(cur)) fs.writeFileSync(hook, cur.replace(/\s*$/, '\n') + line + '\n', { mode: 0o755 });
   }
 
   return created;
@@ -105,6 +111,6 @@ export function installStatusline() {
     S.writeJSON(file, d);
     return `statusline set in ${file}`;
   }
-  if (d.statusLine.command?.includes(BIN)) return 'statusline already includes agency';
+  if (isAgencyHook(d.statusLine)) return 'statusline already includes agency';
   return `You already have a statusline (${d.statusLine.command}).\nAdd this command to it; it reads the same stdin JSON and prints the [AGENCY] badge:\n  ${c}`;
 }

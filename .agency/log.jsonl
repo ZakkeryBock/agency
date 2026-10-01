@@ -28,3 +28,29 @@
 {"at":"2026-10-01T18:06:59.634Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["src/hooks.js"],"components":["hooks"]}
 {"at":"2026-10-01T18:07:01.854Z","actor":"ai","kind":"commit","commit":"ebe7f44290","reason":"fix: first commit after init is a baseline, not attributed","files":["src/hooks.js"],"components":["hooks"]}
 {"at":"2026-10-01T18:07:08.859Z","actor":"ai","agent":"claude-code","kind":"map","components":["project"],"reason":"README screenshots and logo belong to project docs"}
+{"at":"2026-10-01T18:07:13.163Z","actor":"ai","kind":"commit","commit":"4bdfa67d99","reason":"docs: map README assets and LICENSE to project component","files":[],"components":[]}
+{"at":"2026-10-01T22:43:25.089Z","actor":"ai","agent":"claude-code","kind":"decision-open","decision":"D-0004","components":["mcp","skill"],"reason":"How should open decisions be shown and answered inside the Claude Code terminal/plugin?"}
+{"at":"2026-10-01T22:43:34.126Z","actor":"ai","agent":"claude-code","kind":"decision-open","decision":"D-0005","components":["installer","mcp","hooks"],"reason":"How should Agency's MCP server start automatically in any project where Agency is enabled?"}
+{"at":"2026-10-01T22:47:32.241Z","actor":"user","kind":"decision-chosen","decision":"D-0005","components":["installer","mcp","hooks"],"reason":"Publish to npm, use npx","via":"chat"}
+{"at":"2026-10-01T22:47:32.468Z","actor":"user","kind":"decision-chosen","decision":"D-0004","components":["mcp","skill"],"reason":"AI asks via AskUserQuestion","via":"chat"}
+{"at":"2026-10-01T22:47:56.456Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["src/init.js"],"components":["installer"]}
+{"at":"2026-10-01T22:47:57.085Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["src/init.js"],"components":["installer"]}
+{"at":"2026-10-01T22:47:57.751Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["src/init.js"],"components":["installer"]}
+{"at":"2026-10-01T22:47:58.331Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["src/init.js"],"components":["installer"]}
+{"at":"2026-10-01T22:47:58.912Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["src/init.js"],"components":["installer"]}
+{"at":"2026-10-01T22:47:59.520Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["package.json"],"components":["project"]}
+{"at":"2026-10-01T22:48:10.680Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["package.json"],"components":["project"]}
+{"at":"2026-10-01T22:48:11.271Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["skills/agency/SKILL.md"],"components":["installer"]}
+{"at":"2026-10-01T22:48:11.950Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["src/mcp.js"],"components":["mcp"]}
+{"at":"2026-10-01T22:48:22.865Z","actor":"ai","agent":"claude-code","kind":"refresh","components":["installer","mcp","project"],"reason":"npx install + terminal decision prompt","decision":"D-0005"}
+{"at":"2026-10-01T22:49:17.682Z","actor":"ai","agent":"claude-code","kind":"decision-open","decision":"D-0006","components":["gui"],"reason":"TEST: Which color should the test badge be?"}
+{"at":"2026-10-01T22:49:52.684Z","actor":"user","kind":"decision-chosen","decision":"D-0006","components":["gui"],"reason":"Blue","via":"gui"}
+{"at":"2026-10-01T22:51:51.551Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["src/mcp.js"],"components":["mcp"]}
+{"at":"2026-10-01T22:52:04.492Z","actor":"ai","agent":"claude-code","session":"eb976c4e-5e2f-4816-9557-e88952c6f90a","kind":"edit","tool":"Edit","files":["skills/agency/SKILL.md"],"components":["installer"]}
+{"at":"2026-10-01T22:52:30.251Z","actor":"ai","agent":"claude-code","kind":"refresh","components":["mcp","installer"],"reason":"elicitation race for decisions; skill text updated"}
+{"at":"2026-10-01T22:55:00.856Z","actor":"ai","agent":"claude-code","kind":"decision-open","decision":"D-0007","components":["gui"],"reason":"TEST 2: Which color should the test badge be?"}
+{"at":"2026-10-01T22:56:16.715Z","actor":"user","kind":"decision-chosen","decision":"D-0007","components":["gui"],"reason":"Blue","via":"terminal"}
+{"at":"2026-10-01T22:56:22.413Z","actor":"ai","agent":"claude-code","kind":"decision-open","decision":"D-0008","components":["gui"],"reason":"TEST 3: Answer this one in the GUI. Which shape should the badge be?"}
+{"at":"2026-10-01T22:57:16.697Z","actor":"user","kind":"decision-chosen","decision":"D-0008","components":["gui"],"reason":"Pill","via":"gui"}
+{"at":"2026-10-01T22:58:26.626Z","actor":"user","kind":"decision-chosen","decision":"D-0002","components":["store","mcp"],"reason":"Optional local embeddings via Ollama","via":"gui"}
+{"at":"2026-10-01T22:58:40.564Z","actor":"user","kind":"decision-chosen","decision":"D-0001","components":["gui"],"reason":"Source + Preview (Obsidian-style)","via":"gui"}

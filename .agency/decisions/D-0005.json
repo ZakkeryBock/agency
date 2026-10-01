@@ -1,0 +1,80 @@
+{
+  "id": "D-0005",
+  "question": "How should Agency's MCP server start automatically in any project where Agency is enabled?",
+  "context": "agency init writes project .mcp.json and .claude/settings.json with absolute paths to this checkout (gitignored, machine-specific). In another app the server fails to start: it needs a Claude Code restart, manual approval, node_modules in the checkout, and a still-valid absolute path.",
+  "affects": [
+    "installer",
+    "mcp",
+    "hooks"
+  ],
+  "options": [
+    {
+      "name": "Claude Code plugin",
+      "what_it_is": "Package Agency as a Claude Code plugin. Enabling it registers its MCP server, hooks and skill automatically, with no per-project .mcp.json approval.",
+      "how_it_fits_here": "Add .claude-plugin/plugin.json and marketplace.json, a plugin .mcp.json using ${CLAUDE_PLUGIN_ROOT}, hooks/hooks.json, and move skills/agency in. Installer shrinks to creating .agency/ only.",
+      "pros": [
+        "Enable means server runs, hooks and skill included",
+        "No absolute paths, works on every machine",
+        "Updates via marketplace"
+      ],
+      "cons": [
+        "New distribution surface to maintain",
+        "Claude Code only; Cursor/Codex still need manual MCP config",
+        "Dependencies must ship or install on first run"
+      ],
+      "effort": "M",
+      "reversibility": "easy",
+      "reversibility_why": "Plugin files are additive; init can stay as fallback.",
+      "lock_in": "low",
+      "cost": "free",
+      "adds_components": [
+        "plugin"
+      ],
+      "changes_components": [
+        "installer"
+      ],
+      "links": {
+        "docs": "https://docs.claude.com/en/docs/claude-code/plugins",
+        "maturity": "Official Claude Code feature"
+      }
+    },
+    {
+      "name": "Publish to npm, use npx",
+      "what_it_is": "Publish agency as an npm package; init writes .mcp.json with npx so no checkout path is needed.",
+      "how_it_fits_here": "Drop private in package.json, ship prebuilt gui/dist, change src/init.js to emit npx commands for MCP and hooks. Still project-scope .mcp.json needing approval.",
+      "pros": [
+        "Works for all MCP clients",
+        "No absolute paths",
+        "Simple mental model"
+      ],
+      "cons": [
+        "Still needs one-time approval and restart",
+        "npx cold start slows each session",
+        "Must publish and version on npm"
+      ],
+      "effort": "M",
+      "reversibility": "easy",
+      "reversibility_why": "Only changes emitted commands.",
+      "lock_in": "low",
+      "cost": "free",
+      "changes_components": [
+        "installer"
+      ],
+      "links": {
+        "docs": "https://docs.npmjs.com/cli/commands/npx",
+        "maturity": "Standard npm tooling"
+      }
+    }
+  ],
+  "recommendation": {
+    "option": "Claude Code plugin",
+    "why": "Only option where enabling Agency itself starts the server, hooks and skill, with no approval step or machine-specific paths.",
+    "would_change_mind_if": "Most users run non-Claude clients, then npx wins."
+  },
+  "status": "chosen",
+  "chosen": "Publish to npm, use npx",
+  "chosen_by": "user",
+  "created": "2026-10-01T22:43:34.123Z",
+  "agent": "claude-code",
+  "decided": "2026-10-01T22:47:32.239Z"
+}

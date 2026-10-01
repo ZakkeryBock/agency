@@ -92,9 +92,10 @@
     "why": "The wiki is also the AI's memory. Lossless markdown keeps AI edits and git diffs exact, and the AI-block tint is clearest in source.",
     "would_change_mind_if": "mostly non-developers will write in the wiki"
   },
-  "status": "open",
-  "chosen": null,
-  "chosen_by": null,
+  "status": "chosen",
+  "chosen": "Source + Preview (Obsidian-style)",
+  "chosen_by": "user",
   "created": "2026-10-01T17:55:45.821Z",
-  "agent": "claude-code"
+  "agent": "claude-code",
+  "decided": "2026-10-01T22:58:40.562Z"
 }

@@ -11,5 +11,5 @@ Ten tools, kept few because every tool definition costs context tokens on every 
 
 ## Gotchas
 <!-- agency:ai -->
-Finds the project by walking up from cwd for `.agency/`.
+propose_decision blocks: shows terminal form via MCP elicitation and polls decision file for a GUI answer, first wins (10 min cap). No elicitation support: returns text telling AI to use AskUserQuestion.
 <!-- /agency:ai -->

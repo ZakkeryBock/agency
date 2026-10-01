@@ -9,5 +9,5 @@ Idempotent: re-running `agency init` never duplicates hooks or AGENTS.md section
 
 ## Gotchas
 <!-- agency:ai -->
-Writes absolute paths to this checkout into .mcp.json and hooks; re-run init if the package moves.
+init now emits `npx -y agency-dev ...` (cmd /c npx on Windows) for MCP, hooks, git hook. Package must be published to npm for other apps to work; re-running init replaces old absolute-path hooks.
 <!-- /agency:ai -->

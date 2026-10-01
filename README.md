@@ -120,9 +120,15 @@ The status bar badge shows the component count, stale docs, open decisions, and 
 
 Requirements: **Node.js 20+** and **git** (git is optional but recommended: it powers attribution and map history). For the AI side, **Claude Code** gets the full experience; any MCP client works for the tools.
 
-> Agency isn't on npm yet (the name `agency` is taken). Install from source; it takes a minute.
-
 ### 1. Get the CLI
+
+No install needed, `npx` fetches it:
+
+```bash
+npx -y agency-dev            # prints help
+```
+
+Or from source, to hack on it:
 
 ```bash
 git clone https://github.com/ZakkeryBock/agency.git
@@ -142,7 +148,7 @@ npm test          # end-to-end self-check: temp repo, hooks, real MCP round trip
 
 ```bash
 cd ~/code/your-project
-agency init
+npx -y agency-dev init
 ```
 
 `init` is idempotent and creates or merges:
@@ -150,7 +156,7 @@ agency init
 | File | What |
 |---|---|
 | `.agency/` | map, wiki (with starter pages and templates), decisions, log |
-| `.mcp.json` | registers the `agency` MCP server for Claude Code |
+| `.mcp.json` | registers the `agency` MCP server for Claude Code (`npx`, so no machine-specific paths) |
 | `.claude/settings.json` | `SessionStart`, `PostToolUse`, `Stop` hooks (merged, never duplicated) |
 | `.claude/skills/agency/SKILL.md` | the skill: when to fetch context, how to propose decisions, how to refresh cheaply |
 | `AGENTS.md` | the same instructions for Cursor, Codex and other agents (appended between markers) |
@@ -166,7 +172,9 @@ agency init
    agency serve          # opens http://127.0.0.1:4141/?t=<token>
    ```
 
-4. Add the status bar badge:
+4. When the AI hits a fork, the decision pops up **right in the terminal** as a pick-one form, and the same decision waits in the GUI Decisions tab. Answer in either place; the other updates and the AI continues.
+
+5. Add the status bar badge:
 
    ```bash
    agency statusline-install
@@ -272,7 +280,8 @@ Early alpha, built in the open. Agency maps itself: clone this repo and run `age
 - [x] Git attribution, map history and diff, optional local semantic search
 - [ ] Verify the AI's edges against real imports (tree-sitter) for JS/TS/Python
 - [ ] Tested configs for Cursor and Codex
-- [ ] npm package and Claude Code plugin marketplace install
+- [x] npm package (`npx -y agency-dev`), decisions answerable in the terminal or GUI
+- [ ] Claude Code plugin marketplace install
 
 The full design is in [PLAN.md](PLAN.md).
 
