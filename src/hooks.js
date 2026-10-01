@@ -93,7 +93,8 @@ export function postCommit() {
   const state = S.loadState(root);
   const since = state.lastCommitAt || 0;
   const aiFiles = new Set(S.readLog(root, 2000).filter((e) => e.kind === 'edit' && e.actor === 'ai' && Date.parse(e.at) > since).flatMap((e) => e.files || []));
-  const userFiles = files.filter((f) => !aiFiles.has(f));
+  // ponytail: first commit after init is a baseline (it usually carries pre-Agency work), so no attribution guess
+  const userFiles = state.lastCommitAt ? files.filter((f) => !aiFiles.has(f)) : [];
   const hit = S.markStale(root, userFiles, { lastCommitAt: Date.now() });
   const comps = [...S.componentsForFiles(S.loadMap(root), files).keys()];
   S.appendEvent(root, { actor: aiTrailer ? 'ai' : 'user', kind: 'commit', commit: sha.slice(0, 10), reason: body.split('\n')[0], files, components: comps,
