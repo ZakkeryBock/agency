@@ -123,7 +123,9 @@
         "*.json",
         ".gitignore",
         ".mcp.json",
-        ".claude/**"
+        ".claude/**",
+        "docs/**",
+        "LICENSE"
       ],
       "summary": "Package manifest, plan, README, agent instructions and Claude Code wiring for this repo.",
       "origin": {
