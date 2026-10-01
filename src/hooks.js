@@ -19,7 +19,11 @@ function touchSession(state, sid, tool) {
 export function sessionStart() {
   const input = readStdin();
   const root = S.findRoot(input.cwd);
-  if (!root) return;
+  if (!root) {
+    // plugin is on but this project has no .agency/ yet
+    process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: 'SessionStart', additionalContext: 'Agency plugin is enabled but this project has no .agency/. If the user wants it, run `npx -y agency-dev init --plugin` in the project root, then map it with the agency skill.' } }));
+    return;
+  }
   const state = S.loadState(root);
   touchSession(state, input.session_id);
   S.saveState(root, state);
@@ -44,8 +48,9 @@ export function postTool() {
   if (!root) return;
   const tool = input.tool_name || '';
   const state = S.loadState(root);
-  if (tool.startsWith('mcp__agency__')) {
-    touchSession(state, input.session_id, tool.replace('mcp__agency__', ''));
+  // plugin installs name the server mcp__plugin_agency_agency__*
+  if (/^mcp__(plugin_agency_)?agency__/.test(tool)) {
+    touchSession(state, input.session_id, tool.replace(/^mcp__(plugin_agency_)?agency__/, ''));
     S.saveState(root, state);
     return;
   }

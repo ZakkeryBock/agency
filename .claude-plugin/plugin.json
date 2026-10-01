@@ -1,0 +1,17 @@
+{
+  "name": "agency",
+  "version": "0.1.1",
+  "description": "Shared project map, wiki and decision log for you and your AI. Decisions pop up in the terminal and the GUI.",
+  "author": { "name": "ZakkeryBock" },
+  "homepage": "https://github.com/ZakkeryBock/agency#readme",
+  "repository": "https://github.com/ZakkeryBock/agency",
+  "license": "MIT",
+  "mcpServers": {
+    "agency": { "command": "node", "args": ["${CLAUDE_PLUGIN_ROOT}/bin/launch.cjs", "mcp"], "env": { "AGENCY_AGENT": "claude-code" } }
+  },
+  "hooks": {
+    "SessionStart": [{ "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/bin/launch.cjs\" hook session-start", "timeout": 30 }] }],
+    "PostToolUse": [{ "matcher": "Edit|Write|MultiEdit|NotebookEdit|mcp__plugin_agency_agency__.*", "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/bin/launch.cjs\" hook post-tool", "timeout": 30 }] }],
+    "Stop": [{ "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/bin/launch.cjs\" hook stop", "timeout": 30 }] }]
+  }
+}

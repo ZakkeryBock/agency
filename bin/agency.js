@@ -5,7 +5,7 @@ const [cmd, sub, ...rest] = process.argv.slice(2);
 
 const HELP = `agency — shared project map, wiki and decisions for you and your AI
 
-  agency init                 set up .agency/ + Claude Code (MCP, hooks, skill), AGENTS.md, git hook
+  agency init [--plugin]       set up .agency/ + Claude Code (MCP, hooks, skill), AGENTS.md, git hook
   agency serve [--port N]     open the GUI (127.0.0.1 only)
   agency check                coverage: unmapped files, dead globs, stale components
   agency context "<task>"     print the briefing an AI would get
@@ -18,7 +18,7 @@ const need = () => S.findRoot() || (console.error('No .agency/ here. Run `agency
 switch (cmd) {
   case 'init': {
     const { init } = await import('../src/init.js');
-    const created = init();
+    const created = init(process.cwd(), { plugin: process.argv.includes('--plugin') });
     console.log(`Agency initialized (${created.length} files).
 Next:
   1. Restart Claude Code in this folder and approve the "agency" MCP server.

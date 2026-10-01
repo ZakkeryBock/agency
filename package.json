@@ -1,12 +1,21 @@
 {
   "name": "agency-dev",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local-first project map, wiki and decision log shared by you and your AI.",
   "type": "module",
   "bin": {
     "agency": "bin/agency.js"
   },
-  "files": ["bin", "src", "skills", "gui/index.html", "gui/style.css", "gui/dist", "README.md", "LICENSE"],
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "gui/index.html",
+    "gui/style.css",
+    "gui/dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "esbuild gui/app.js --bundle --minify --format=esm --outfile=gui/dist/app.js",

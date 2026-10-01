@@ -1,0 +1,14 @@
+{
+  "name": "agency",
+  "owner": {
+    "name": "ZakkeryBock"
+  },
+  "plugins": [
+    {
+      "name": "agency",
+      "source": "./",
+      "description": "Shared project map, wiki and decision log for you and your AI."
+    }
+  ],
+  "description": "Agency: a shared project map, wiki and decision log for you and your AI."
+}

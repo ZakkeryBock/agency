@@ -144,6 +144,15 @@ agency            # prints help
 npm test          # end-to-end self-check: temp repo, hooks, real MCP round trip
 ```
 
+### Claude Code plugin (easiest)
+
+```
+/plugin marketplace add ZakkeryBock/agency
+/plugin install agency@agency
+```
+
+The plugin starts the MCP server, hooks and skill for you in every project, nothing to approve per project. In a project, run `npx -y agency-dev init --plugin` once to create `.agency/`, then ask Claude to map it. Skip step 2's plain `init`; it is for non-plugin setups.
+
 ### 2. Add it to a project
 
 ```bash
@@ -281,7 +290,7 @@ Early alpha, built in the open. Agency maps itself: clone this repo and run `age
 - [ ] Verify the AI's edges against real imports (tree-sitter) for JS/TS/Python
 - [ ] Tested configs for Cursor and Codex
 - [x] npm package (`npx -y agency-dev`), decisions answerable in the terminal or GUI
-- [ ] Claude Code plugin marketplace install
+- [x] Claude Code plugin (`/plugin marketplace add ZakkeryBock/agency`)
 
 The full design is in [PLAN.md](PLAN.md).
 

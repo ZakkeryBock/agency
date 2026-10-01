@@ -37,7 +37,8 @@ function mergeJSON(file, fn) {
   S.writeJSON(file, data);
 }
 
-export function init(root = process.cwd()) {
+// plugin: the Claude Code plugin already provides MCP, hooks and skill, so only scaffold .agency/ + other-agent files.
+export function init(root = process.cwd(), { plugin = false } = {}) {
   const A = (...x) => path.join(root, S.DIR, ...x);
   const created = [];
   const put = (file, text) => { if (!fs.existsSync(file)) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, text); created.push(path.relative(root, file)); } };
@@ -51,7 +52,7 @@ export function init(root = process.cwd()) {
   S.appendEvent(root, { actor: 'user', kind: 'init', reason: 'Agency installed; everything before this is pre-agency' });
 
   // MCP server for Claude Code (project scope)
-  mergeJSON(path.join(root, '.mcp.json'), (d) => {
+  if (!plugin) mergeJSON(path.join(root, '.mcp.json'), (d) => {
     d.mcpServers = d.mcpServers || {};
     const args = ['-y', PKG_NAME, 'mcp'];
     const env = { AGENCY_AGENT: 'claude-code' };
@@ -60,7 +61,7 @@ export function init(root = process.cwd()) {
   });
 
   // Hooks (project settings, merged, idempotent)
-  mergeJSON(path.join(root, '.claude', 'settings.json'), (d) => {
+  if (!plugin) mergeJSON(path.join(root, '.claude', 'settings.json'), (d) => {
     d.hooks = d.hooks || {};
     const add = (event, sub, matcher) => {
       // replace older agency hooks (e.g. absolute-path ones) so re-running init upgrades them
@@ -75,9 +76,11 @@ export function init(root = process.cwd()) {
   });
 
   // Skill
-  const skillDst = path.join(root, '.claude', 'skills', 'agency', 'SKILL.md');
-  fs.mkdirSync(path.dirname(skillDst), { recursive: true });
-  fs.copyFileSync(path.join(PKG, 'skills', 'agency', 'SKILL.md'), skillDst);
+  if (!plugin) {
+    const skillDst = path.join(root, '.claude', 'skills', 'agency', 'SKILL.md');
+    fs.mkdirSync(path.dirname(skillDst), { recursive: true });
+    fs.copyFileSync(path.join(PKG, 'skills', 'agency', 'SKILL.md'), skillDst);
+  }
 
   // Other agents (Cursor, Codex, ...) read AGENTS.md
   const agents = path.join(root, 'AGENTS.md');

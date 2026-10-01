@@ -6,3 +6,8 @@ Package manifest, plan, README, agent instructions and Claude Code wiring for th
 <!-- /agency:ai -->
 
 ## Notes
+
+## Gotchas
+<!-- agency:ai -->
+README install now leads with `npx -y agency-dev`; decisions answerable in terminal form or GUI.
+<!-- /agency:ai -->

@@ -54,3 +54,5 @@
 {"at":"2026-10-01T22:57:16.697Z","actor":"user","kind":"decision-chosen","decision":"D-0008","components":["gui"],"reason":"Pill","via":"gui"}
 {"at":"2026-10-01T22:58:26.626Z","actor":"user","kind":"decision-chosen","decision":"D-0002","components":["store","mcp"],"reason":"Optional local embeddings via Ollama","via":"gui"}
 {"at":"2026-10-01T22:58:40.564Z","actor":"user","kind":"decision-chosen","decision":"D-0001","components":["gui"],"reason":"Source + Preview (Obsidian-style)","via":"gui"}
+{"at":"2026-10-01T23:03:31.094Z","actor":"ai","kind":"commit","commit":"c002686f1a","reason":"feat: npx install, terminal decision forms linked to GUI","files":[".claude/skills/agency/SKILL.md","README.md","package.json","skills/agency/SKILL.md","src/init.js","src/mcp.js"],"components":["mcp","installer","project"],"userFiles":[".claude/skills/agency/SKILL.md","README.md"],"inferred":true}
+{"at":"2026-10-01T23:03:37.135Z","actor":"ai","agent":"claude-code","kind":"refresh","components":["project"],"reason":"README npx install + decision flow docs"}
