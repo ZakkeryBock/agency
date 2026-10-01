@@ -9,5 +9,5 @@ Single entry point `bin/agency.js`. Lazy-imports each subcommand so hooks and th
 
 ## Gotchas
 <!-- agency:ai -->
-Hook handlers are wrapped in try/catch: a hook must never break the user's Claude Code session.
+bin/launch.cjs runs `npx -y agency-dev` cross-platform for the plugin. `init --plugin` skips MCP/hooks/skill.
 <!-- /agency:ai -->

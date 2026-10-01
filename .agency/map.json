@@ -65,7 +65,7 @@
         "src/init.js",
         "skills/**"
       ],
-      "summary": "agency init: scaffolds .agency/, wires MCP, hooks, skill, AGENTS.md and the git hook.",
+      "summary": "init scaffolds .agency/ and wires Claude Code via npx; --plugin skips what the plugin provides.",
       "origin": {
         "actor": "ai",
         "agent": "claude-code",
@@ -132,6 +132,20 @@
         "actor": "ai",
         "agent": "claude-code",
         "at": "2026-10-01T17:55:45.788Z"
+      }
+    },
+    {
+      "id": "plugin",
+      "name": "Claude Code plugin",
+      "kind": "tooling",
+      "files": [
+        ".claude-plugin/**"
+      ],
+      "summary": "Plugin + marketplace manifests that bundle the MCP server, hooks and skill so enabling it starts Agency with no per-project setup.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T23:29:10.336Z"
       }
     }
   ],
@@ -207,6 +221,12 @@
       "to": "mcp",
       "kind": "calls",
       "why": "drives the real MCP server over stdio"
+    },
+    {
+      "from": "plugin",
+      "to": "cli",
+      "kind": "calls",
+      "why": "Its MCP server and hooks run `npx agency-dev` through bin/launch.cjs"
     }
   ]
 }

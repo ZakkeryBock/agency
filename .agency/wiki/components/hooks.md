@@ -9,5 +9,5 @@ Does deterministic bookkeeping so the AI spends no tokens on it: file→componen
 
 ## Gotchas
 <!-- agency:ai -->
-Edits made through Bash (sed, scripts) are invisible to PostToolUse; the git post-commit hook catches them and attributes them as inferred.
+Recognises plugin tool names mcp__plugin_agency_agency__*; SessionStart hints to run init --plugin when no .agency/.
 <!-- /agency:ai -->
