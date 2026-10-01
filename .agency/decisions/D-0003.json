@@ -1,0 +1,23 @@
+{
+  "id": "D-0003",
+  "question": "GUI framework",
+  "context": "Five views do not need React; one bundling step is only needed for CodeMirror.",
+  "affects": [
+    "gui"
+  ],
+  "options": [
+    {
+      "name": "Vanilla DOM + esbuild, no UI framework"
+    }
+  ],
+  "recommendation": {
+    "option": "Vanilla DOM + esbuild, no UI framework",
+    "why": "Five views do not need React; one bundling step is only needed for CodeMirror."
+  },
+  "status": "chosen",
+  "chosen": "Vanilla DOM + esbuild, no UI framework",
+  "chosen_by": "ai",
+  "minor": true,
+  "created": "2026-10-01T17:56:01.152Z",
+  "agent": "claude-code"
+}

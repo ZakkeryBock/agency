@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agency</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='9' cy='10' r='5' fill='%2340c4c4'/><circle cx='23' cy='10' r='5' fill='%23e0a030'/><circle cx='16' cy='23' r='5' fill='%234c8dff'/></svg>">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="logo"></span>Agency <span id="project" class="muted"></span></div>
+    <nav class="tabs" role="tablist">
+      <button data-tab="map" role="tab">Map</button>
+      <button data-tab="wiki" role="tab">Wiki</button>
+      <button data-tab="decisions" role="tab">Decisions <span id="dec-count" class="count" hidden></span></button>
+      <button data-tab="timeline" role="tab">Timeline</button>
+      <button data-tab="ai" role="tab">AI View</button>
+    </nav>
+    <div class="top-right">
+      <span id="chips"></span>
+      <button id="open-search" class="ghost" title="Search (Ctrl+K)">Search <kbd>Ctrl K</kbd></button>
+      <span id="live" class="live" title="Live: updates when the AI or you change anything"></span>
+    </div>
+  </header>
+  <main id="view"></main>
+  <div id="palette" class="palette" hidden></div>
+  <div id="modal" class="modal" hidden></div>
+  <div id="toast" class="toast" hidden></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

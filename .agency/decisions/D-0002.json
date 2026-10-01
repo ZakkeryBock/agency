@@ -1,0 +1,64 @@
+{
+  "id": "D-0002",
+  "question": "Should semantic (meaning-based) search be part of the default setup?",
+  "context": "Text search + graph walk is built and always on. Semantic search is also built but only activates if Ollama runs locally with an embedding model; it is not running on this machine. Try both in Ctrl+K once Ollama is installed.",
+  "affects": [
+    "store",
+    "mcp"
+  ],
+  "options": [
+    {
+      "name": "Text search + graph only",
+      "what_it_is": "Finds pages by matching words, then follows map connections to pull in related components. No extra software.",
+      "how_it_fits_here": "Current default in src/store.js search() and context(). Nothing to install.",
+      "pros": [
+        "Zero setup",
+        "Instant, deterministic",
+        "Graph walk already finds most related context"
+      ],
+      "cons": [
+        "Misses synonyms (\"login\" vs \"auth\") unless the wiki uses both words"
+      ],
+      "effort": "S",
+      "reversibility": "easy",
+      "reversibility_why": "Semantic stays available as opt-in.",
+      "lock_in": "none",
+      "cost": "free"
+    },
+    {
+      "name": "Optional local embeddings via Ollama",
+      "what_it_is": "Ollama runs AI models on your own machine. An embedding model turns each page into a vector so search matches meaning, not just words. Nothing leaves your computer.",
+      "how_it_fits_here": "Already wired: semanticSearch() in src/store.js caches vectors in .agency/.cache, Ctrl+K and agency_search(mode: semantic) use it when Ollama is detected.",
+      "pros": [
+        "Finds related pages with different wording",
+        "Fully local",
+        "Opt-in, no cost when absent"
+      ],
+      "cons": [
+        "Needs Ollama installed and a ~270MB model pulled",
+        "First index takes a few seconds"
+      ],
+      "effort": "S",
+      "reversibility": "easy",
+      "reversibility_why": "Delete .agency/.cache and stop Ollama.",
+      "lock_in": "none",
+      "cost": "free, local CPU/GPU",
+      "links": {
+        "docs": "https://ollama.com/library/nomic-embed-text",
+        "repo": "https://github.com/ollama/ollama",
+        "license": "MIT",
+        "maturity": "Widely used local model runner"
+      }
+    }
+  ],
+  "recommendation": {
+    "option": "Optional local embeddings via Ollama",
+    "why": "Keeps the default zero-setup while letting you turn on meaning-based search locally with no code change.",
+    "would_change_mind_if": "the AI briefing already finds the right context in practice, then semantic is not worth the install"
+  },
+  "status": "open",
+  "chosen": null,
+  "chosen_by": null,
+  "created": "2026-10-01T17:56:01.142Z",
+  "agent": "claude-code"
+}

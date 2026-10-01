@@ -1,0 +1,210 @@
+{
+  "components": [
+    {
+      "id": "cli",
+      "name": "CLI",
+      "kind": "tooling",
+      "files": [
+        "bin/**"
+      ],
+      "summary": "The `agency` command: dispatches init, serve, check, context, mcp and hook subcommands.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.780Z"
+      }
+    },
+    {
+      "id": "store",
+      "name": "Store",
+      "kind": "module",
+      "files": [
+        "src/store.js",
+        "src/md.js"
+      ],
+      "summary": "Reads and writes everything in .agency/: map, wiki pages, log, state, decisions, search and the AI context briefing.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.782Z"
+      }
+    },
+    {
+      "id": "mcp",
+      "name": "MCP server",
+      "kind": "service",
+      "files": [
+        "src/mcp.js"
+      ],
+      "summary": "Tools AIs use to read and edit what the user sees: context, search, map edits, wiki writes, refresh, decisions.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.783Z"
+      }
+    },
+    {
+      "id": "hooks",
+      "name": "Claude Code hooks",
+      "kind": "module",
+      "files": [
+        "src/hooks.js"
+      ],
+      "summary": "Session start briefing, edit tracking, end-of-turn stale nudge, git post-commit attribution, statusline badge.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.784Z"
+      }
+    },
+    {
+      "id": "installer",
+      "name": "Installer",
+      "kind": "tooling",
+      "files": [
+        "src/init.js",
+        "skills/**"
+      ],
+      "summary": "agency init: scaffolds .agency/, wires MCP, hooks, skill, AGENTS.md and the git hook.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.784Z"
+      }
+    },
+    {
+      "id": "gui-server",
+      "name": "GUI server",
+      "kind": "service",
+      "files": [
+        "src/server.js"
+      ],
+      "summary": "Local HTTP server on 127.0.0.1 with a per-run token: JSON API, live updates over SSE, git history of the map.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.785Z"
+      }
+    },
+    {
+      "id": "gui",
+      "name": "GUI",
+      "kind": "ui",
+      "files": [
+        "gui/**"
+      ],
+      "summary": "Browser app: Map, Wiki (two editor modes), Decisions, Timeline, AI View. Bundled by esbuild.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.786Z"
+      }
+    },
+    {
+      "id": "tests",
+      "name": "Self-check",
+      "kind": "tooling",
+      "files": [
+        "test/**"
+      ],
+      "summary": "One end-to-end check: init, hooks and a real MCP round-trip against a temp repo.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.787Z"
+      }
+    },
+    {
+      "id": "project",
+      "name": "Project config & docs",
+      "kind": "infra",
+      "files": [
+        "*.md",
+        "*.json",
+        ".gitignore",
+        ".mcp.json",
+        ".claude/**"
+      ],
+      "summary": "Package manifest, plan, README, agent instructions and Claude Code wiring for this repo.",
+      "origin": {
+        "actor": "ai",
+        "agent": "claude-code",
+        "at": "2026-10-01T17:55:45.788Z"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "cli",
+      "to": "store",
+      "kind": "calls",
+      "why": "check and context commands read the store directly"
+    },
+    {
+      "from": "cli",
+      "to": "mcp",
+      "kind": "calls",
+      "why": "`agency mcp` starts the server"
+    },
+    {
+      "from": "cli",
+      "to": "hooks",
+      "kind": "calls",
+      "why": "`agency hook <name>` and `agency statusline` run hook handlers"
+    },
+    {
+      "from": "cli",
+      "to": "installer",
+      "kind": "calls",
+      "why": "`agency init` and `statusline-install`"
+    },
+    {
+      "from": "cli",
+      "to": "gui-server",
+      "kind": "calls",
+      "why": "`agency serve` starts it"
+    },
+    {
+      "from": "mcp",
+      "to": "store",
+      "kind": "writes",
+      "why": "every tool is a thin wrapper over store functions"
+    },
+    {
+      "from": "hooks",
+      "to": "store",
+      "kind": "writes",
+      "why": "logs edits, marks components stale, tracks session usage"
+    },
+    {
+      "from": "installer",
+      "to": "store",
+      "kind": "writes",
+      "why": "creates .agency/ files and the init event"
+    },
+    {
+      "from": "gui-server",
+      "to": "store",
+      "kind": "reads",
+      "why": "API endpoints read/write pages, decisions, search"
+    },
+    {
+      "from": "gui-server",
+      "to": "gui",
+      "kind": "renders",
+      "why": "serves the bundled app and pushes live updates"
+    },
+    {
+      "from": "gui",
+      "to": "store",
+      "kind": "depends-on",
+      "why": "imports src/md.js so frontmatter and AI-block rules match the server exactly"
+    },
+    {
+      "from": "tests",
+      "to": "mcp",
+      "kind": "calls",
+      "why": "drives the real MCP server over stdio"
+    }
+  ]
+}

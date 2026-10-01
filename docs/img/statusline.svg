@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 44" width="760" height="44" font-family="Consolas, 'Cascadia Code', 'SF Mono', monospace" font-size="15">
+  <rect width="760" height="44" rx="8" fill="#16171a"/>
+  <text x="16" y="27">
+    <tspan fill="#d7875f">[CAVEMAN]</tspan>
+    <tspan fill="#87af87" dx="10">[PONYTAIL]</tspan>
+    <tspan fill="#5fd7d7" dx="10">[AGENCY]</tspan>
+    <tspan fill="#c8c8c4" dx="6">9 comps ·</tspan>
+    <tspan fill="#d7af5f">1 stale</tspan>
+    <tspan fill="#c8c8c4">·</tspan>
+    <tspan fill="#d787af">2 decisions</tspan>
+    <tspan fill="#c8c8c4">·</tspan>
+    <tspan fill="#87d787">AI used 4× (agency_context)</tspan>
+  </text>
+</svg>

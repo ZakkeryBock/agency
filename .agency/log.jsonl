@@ -1,0 +1,26 @@
+{"at":"2026-10-01T17:54:55.658Z","actor":"user","kind":"init","reason":"Agency installed; everything before this is pre-agency"}
+{"at":"2026-10-01T17:55:45.797Z","actor":"ai","agent":"claude-code","kind":"map","reason":"initial map of Agency itself","components":["cli","store","mcp","hooks","installer","gui-server","gui","tests","project"]}
+{"at":"2026-10-01T17:55:45.803Z","actor":"ai","agent":"claude-code","kind":"wiki","page":"components/cli.md"}
+{"at":"2026-10-01T17:55:45.806Z","actor":"ai","agent":"claude-code","kind":"wiki","page":"components/store.md"}
+{"at":"2026-10-01T17:55:45.808Z","actor":"ai","agent":"claude-code","kind":"wiki","page":"components/mcp.md"}
+{"at":"2026-10-01T17:55:45.811Z","actor":"ai","agent":"claude-code","kind":"wiki","page":"components/hooks.md"}
+{"at":"2026-10-01T17:55:45.813Z","actor":"ai","agent":"claude-code","kind":"wiki","page":"components/installer.md"}
+{"at":"2026-10-01T17:55:45.815Z","actor":"ai","agent":"claude-code","kind":"wiki","page":"components/gui-server.md"}
+{"at":"2026-10-01T17:55:45.817Z","actor":"ai","agent":"claude-code","kind":"wiki","page":"components/gui.md"}
+{"at":"2026-10-01T17:55:45.823Z","actor":"ai","agent":"claude-code","kind":"decision-open","decision":"D-0001","components":["gui"],"reason":"Which wiki editor style should be the default?"}
+{"at":"2026-10-01T17:56:01.145Z","actor":"ai","agent":"claude-code","kind":"decision-open","decision":"D-0002","components":["store","mcp"],"reason":"Should semantic (meaning-based) search be part of the default setup?"}
+{"at":"2026-10-01T17:56:01.154Z","actor":"ai","agent":"claude-code","kind":"decision-ai","decision":"D-0003","components":["gui"],"reason":"GUI framework"}
+{"at":"2026-10-01T17:56:15.945Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Write","files":["README.md"],"components":["project"]}
+{"at":"2026-10-01T17:56:42.312Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["gui/app.js"],"components":["gui"]}
+{"at":"2026-10-01T17:57:40.040Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["src/store.js"],"components":["store"]}
+{"at":"2026-10-01T17:57:52.916Z","actor":"user","kind":"wiki","page":"components/store.md","via":"gui"}
+{"at":"2026-10-01T17:58:08.317Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["src/store.js"],"components":["store"]}
+{"at":"2026-10-01T17:58:43.463Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["src/init.js"],"components":["installer"]}
+{"at":"2026-10-01T17:58:44.025Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["src/init.js"],"components":["installer"]}
+{"at":"2026-10-01T17:58:55.329Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["src/store.js"],"components":["store"]}
+{"at":"2026-10-01T17:59:19.664Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["src/store.js"],"components":["store"]}
+{"at":"2026-10-01T17:59:50.285Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Edit","files":["PLAN.md"],"components":["project"]}
+{"at":"2026-10-01T17:59:53.486Z","actor":"ai","agent":"claude-code","kind":"refresh","components":["store","installer","project","hooks","gui"],"reason":"dogfood fixes: map layout, rule filtering, briefing dedupe"}
+{"at":"2026-10-01T18:05:22.782Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Write","files":["docs/img/logo.svg"],"components":[]}
+{"at":"2026-10-01T18:05:23.271Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Write","files":["docs/img/statusline.svg"],"components":[]}
+{"at":"2026-10-01T18:06:23.345Z","actor":"ai","agent":"claude-code","session":"fa7861eb-34e6-4b19-9a04-1dc6f23b3073","kind":"edit","tool":"Write","files":["README.md"],"components":["project"]}

@@ -1,0 +1,100 @@
+{
+  "id": "D-0001",
+  "question": "Which wiki editor style should be the default?",
+  "context": "Both editors are built so you can try them on real pages (Wiki tab, toggle in the toolbar). Pick the default; the other can stay as an option or be removed to cut code in gui/wiki.js.",
+  "affects": [
+    "gui"
+  ],
+  "options": [
+    {
+      "name": "Source + Preview (Obsidian-style)",
+      "what_it_is": "You type markdown in a code-style editor on the left and see the rendered page update live on the right. What you type is exactly what gets saved.",
+      "how_it_fits_here": "Already the CodeMirror 6 editor in gui/wiki.js. Files stay byte-for-byte what you typed, which keeps git diffs clean and AI edits predictable.",
+      "pros": [
+        "Lossless: no conversion step",
+        "AI-written blocks visibly tinted in the source",
+        "Slash menu and [[link]] autocomplete",
+        "Same files open cleanly in Obsidian"
+      ],
+      "cons": [
+        "You see markdown syntax",
+        "Split view needs a wide screen"
+      ],
+      "effort": "S",
+      "reversibility": "easy",
+      "reversibility_why": "Default is one localStorage key; both modes already exist.",
+      "lock_in": "none",
+      "cost": "free",
+      "links": {
+        "docs": "https://codemirror.net/docs/",
+        "repo": "https://github.com/codemirror/dev",
+        "license": "MIT",
+        "maturity": "CodeMirror 6, mature, used by Obsidian and Replit"
+      }
+    },
+    {
+      "name": "Rich (Notion-style)",
+      "what_it_is": "You edit the rendered page directly: headings look like headings, checkboxes are clickable, no markdown syntax visible.",
+      "how_it_fits_here": "Already built in gui/wiki.js with contenteditable + turndown converting back to markdown on save. AI blocks are read-only in this mode to stay lossless.",
+      "pros": [
+        "Friendliest for non-technical writing",
+        "Clickable checklists",
+        "One column, works on narrow screens"
+      ],
+      "cons": [
+        "HTML→markdown conversion can reformat unusual markdown",
+        "Diagrams must be edited in Source mode",
+        "Uses deprecated execCommand for inserts"
+      ],
+      "effort": "S",
+      "reversibility": "easy",
+      "reversibility_why": "Default is one localStorage key.",
+      "lock_in": "none",
+      "cost": "free",
+      "links": {
+        "docs": "https://github.com/mixmark-io/turndown",
+        "repo": "https://github.com/mixmark-io/turndown",
+        "license": "MIT",
+        "maturity": "turndown 7.x, widely used"
+      }
+    },
+    {
+      "name": "Upgrade Rich to a block editor (TipTap/ProseMirror)",
+      "what_it_is": "A real structured editor library (what Notion-like apps use) with drag handles, proper undo, and schema-validated content.",
+      "how_it_fits_here": "Replaces the contenteditable code in gui/wiki.js with TipTap plus a markdown extension; adds ~300KB to the bundle and a new dependency tree.",
+      "pros": [
+        "Best rich editing quality",
+        "No deprecated browser APIs"
+      ],
+      "cons": [
+        "Biggest code + dependency cost",
+        "Markdown round-trip still not perfectly lossless"
+      ],
+      "effort": "L",
+      "reversibility": "moderate",
+      "reversibility_why": "Editor code would be rewritten around its API.",
+      "lock_in": "low",
+      "cost": "free (MIT core)",
+      "adds_components": [],
+      "changes_components": [
+        "gui"
+      ],
+      "links": {
+        "docs": "https://tiptap.dev/docs",
+        "repo": "https://github.com/ueberdosis/tiptap",
+        "license": "MIT",
+        "maturity": "Popular, active, some features paid"
+      }
+    }
+  ],
+  "recommendation": {
+    "option": "Source + Preview (Obsidian-style)",
+    "why": "The wiki is also the AI's memory. Lossless markdown keeps AI edits and git diffs exact, and the AI-block tint is clearest in source.",
+    "would_change_mind_if": "mostly non-developers will write in the wiki"
+  },
+  "status": "open",
+  "chosen": null,
+  "chosen_by": null,
+  "created": "2026-10-01T17:55:45.821Z",
+  "agent": "claude-code"
+}
